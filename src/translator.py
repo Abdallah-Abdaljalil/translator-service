@@ -1,6 +1,5 @@
 import openai
 import time
-from openai.error import OpenAIError, RateLimitError
 
 openai.api_key = "9bcZIi7ZRlZF9qvCb00ETujiDr8kpGq3fACo36yEm5xc5Envydj3JQQJ99AJACHrzpqXJ3w3AAABACOGCKto"
 openai.api_base = "https://kwarraic-openai-resource.openai.azure.com/"
