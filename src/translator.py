@@ -1,34 +1,64 @@
+import openai
+from sentence_transformers import SentenceTransformer, util
+import time
+from openai.error import OpenAIError, RateLimitError
+
+model = SentenceTransformer('all-MiniLM-L6-v2')
+openai.api_key = "9bcZIi7ZRlZF9qvCb00ETujiDr8kpGq3fACo36yEm5xc5Envydj3JQQJ99AJACHrzpqXJ3w3AAABACOGCKto"
+openai.api_base = "https://kwarraic-openai-resource.openai.azure.com/"
+openai.api_type = "azure"
+openai.api_version = "2024-08-01-preview"
+deployment_name = "khadija-gpt4-deployment"
+
+def get_language(post: str) -> str:
+    context = "Identify if the following text's language is in 'English','nonenglish', or 'unintelligible'" # TODO: Insert context
+    # ---------------- YOUR CODE HERE ---------------- #
+    response = openai.ChatCompletion.create(
+        engine=deployment_name,
+        messages=[
+            {"role": "system", "content": context},
+            {"role": "user", "content": post}
+        ]
+    )
+
+    classification = response.choices[0].message.content
+    return classification
+
+def get_translation(post: str) -> str:
+    context = "Translate the following text into English." # TODO: Insert context
+    # ---------------- YOUR CODE HERE ---------------- #https://oli.cmu.edu/jcourse/workbook/activity/page?context=857b38290a0001dc2ae475a176bb17ba
+    response = openai.ChatCompletion.create(
+        engine=deployment_name,
+        messages=[
+            {"role": "system", "content": context},
+            {"role": "user", "content": post}
+        ]
+    )
+
+    translated_text = response.choices[0].message.content
+    return translated_text
+
+
 def translate_content(content: str) -> tuple[bool, str]:
-    if content == "这是一条中文消息":
-        return False, "This is a Chinese message"
-    if content == "Ceci est un message en français":
-        return False, "This is a French message"
-    if content == "Esta es un mensaje en español":
-        return False, "This is a Spanish message"
-    if content == "Esta é uma mensagem em português":
-        return False, "This is a Portuguese message"
-    if content  == "これは日本語のメッセージです":
-        return False, "This is a Japanese message"
-    if content == "이것은 한국어 메시지입니다":
-        return False, "This is a Korean message"
-    if content == "Dies ist eine Nachricht auf Deutsch":
-        return False, "This is a German message"
-    if content == "Questo è un messaggio in italiano":
-        return False, "This is an Italian message"
-    if content == "Это сообщение на русском":
-        return False, "This is a Russian message"
-    if content == "هذه رسالة باللغة العربية":
-        return False, "This is an Arabic message"
-    if content == "यह हिंदी में संदेश है":
-        return False, "This is a Hindi message"
-    if content == "นี่คือข้อความภาษาไทย":
-        return False, "This is a Thai message"
-    if content == "Bu bir Türkçe mesajdır":
-        return False, "This is a Turkish message"
-    if content == "Đây là một tin nhắn bằng tiếng Việt":
-        return False, "This is a Vietnamese message"
-    if content == "Esto es un mensaje en catalán":
-        return False, "This is a Catalan message"
-    if content == "This is an English message":
-        return True, "This is an English message"
-    return True, content
+    try:  
+        time.sleep(60)
+        language = get_language(post)
+
+        if isinstance(language, str) and language.isalpha():
+            if language.lower().strip() == "english":
+              return (True, "Already English")
+
+            if language.lower().strip() == "nonenglish":
+              time.sleep(60)
+              translation = get_translation(post)
+              time.sleep(60)
+              return (False, translation)
+
+            if language.lower().strip() == "unintelligible":
+              return (False, "Unintelligible")
+
+        return (False, "Unavailable")
+
+  except Exception as e:
+      return (False, "Error")
+
