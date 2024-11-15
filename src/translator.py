@@ -39,7 +39,7 @@ def get_translation(post: str) -> str:
 def translate_content(content: str) -> tuple[bool, str]:
     try:  
         if not content.strip():
-            return (False, "Unavailable")
+            return (True, "Unavailable")
 
 
         language = get_language(content)
@@ -57,7 +57,7 @@ def translate_content(content: str) -> tuple[bool, str]:
             if language.lower().strip() == "unintelligible":
               return (False, "Unintelligible")
 
-        return (False, "Unavailable")
+        return (True, "Unavailable")
     except Exception as e:
       return (False, "Error")
 
