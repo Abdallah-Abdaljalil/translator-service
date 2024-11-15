@@ -60,7 +60,6 @@ def translate_content(content: str) -> tuple[bool, str]:
               return (False, "Unintelligible")
 
         return (False, "Unavailable")
-
-  except Exception as e:
+    except Exception as e:
       return (False, "Error")
 
