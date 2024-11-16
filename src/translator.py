@@ -41,12 +41,12 @@ def translate_content(content: str) -> tuple[bool, str]:
         if not content.strip():
             return (True, "Unavailable")
 
-
+        time.sleep(60)
         language = get_language(content)
 
         if isinstance(language, str) and language.isalpha():
             if language.lower().strip() == "english":
-              return (True, "Already English")
+              return (True, content)
 
             if language.lower().strip() == "nonenglish":
               time.sleep(60)
