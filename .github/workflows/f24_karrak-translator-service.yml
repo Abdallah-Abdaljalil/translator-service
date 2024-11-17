@@ -8,6 +8,7 @@ on:
   push:
     branches:
       - f24
+      - TestingPyTest
   workflow_dispatch:
 
 jobs:
