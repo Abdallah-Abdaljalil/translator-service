@@ -57,7 +57,7 @@ def translate_content(content: str) -> tuple[bool, str]:
             if language.lower().strip() == "unintelligible":
               return (False, "Unintelligible")
 
-        return (True, "Unavailable")
+        return (False, "Unavailable")
     except Exception as e:
       return (False, "Error")
 

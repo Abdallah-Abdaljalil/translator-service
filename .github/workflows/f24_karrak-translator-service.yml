@@ -8,11 +8,14 @@ on:
   push:
     branches:
       - f24
+      - TestingPyTest
+
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
       - uses: actions/checkout@v4
@@ -28,9 +31,17 @@ jobs:
           source venv/bin/activate
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
+          pip install sentence-transformers==3.3.0  # Install only for testing
 
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
+      - name: Run tests with pytest
+        run: pytest
+      
+      - name: Uninstall sentence-transformers==3.3.0 after testing
+        run: pip uninstall -y sentence-transformers==3.3.0
+      
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
 
