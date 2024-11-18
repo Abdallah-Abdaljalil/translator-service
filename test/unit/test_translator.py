@@ -1,6 +1,7 @@
 from src.translator import translate_content
 from sentence_transformers import SentenceTransformer, util
 from mock import patch
+import openai
 
 model = SentenceTransformer('all-MiniLM-L6-v2')
 
