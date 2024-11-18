@@ -2,7 +2,7 @@ import os
 import openai
 import time
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = "9bcZIi7ZRlZF9qvCb00ETujiDr8kpGq3fACo36yEm5xc5Envydj3JQQJ99AJACHrzpqXJ3w3AAABACOGCKto"
 openai.api_base = "https://kwarraic-openai-resource.openai.azure.com/"
 openai.api_type = "azure"
 openai.api_version = "2024-08-01-preview"
