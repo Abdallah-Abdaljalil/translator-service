@@ -9,6 +9,7 @@ on:
     branches:
       - f24
       - TestingPyTest
+      - testingDeployment
 
   workflow_dispatch:
 
@@ -39,6 +40,11 @@ jobs:
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
       - name: Run tests with pytest
         run: pytest
+      
+      - name: Uninstall sentence-transformers==3.3.0 after testing
+        run: |
+          pip uninstall -y sentence-transformers==3.3.0
+          pip uninstall -y --quiet pytest ipytest pytest-mock mock
       
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
