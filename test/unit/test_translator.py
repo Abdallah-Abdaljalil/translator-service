@@ -62,3 +62,4 @@ def test_unexpected_empty(mocker):
   mocker.return_value.choices[0].message.content = "."
   # TODO assert the expected behavior
   assert translate_content("Hier ist dein erstes Beispiel.") == (False, "Unavailable")
+  
